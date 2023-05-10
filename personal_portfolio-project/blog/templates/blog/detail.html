@@ -1,0 +1,18 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+
+<div class="container text-center">
+    <br>
+    <h1 class="text-primary" > {{ blog.title }} </h1>
+    <h7 class="text-muted" > {{ blog.date }} </h7>
+    <br>
+
+    <br>
+    <div class="text-start">
+            {{ blog.description }}
+
+    </div>
+
+</div>
+
+{% endblock %}

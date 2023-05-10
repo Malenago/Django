@@ -1,0 +1,39 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="container text-center">
+
+    <br>
+    <h1>Всем привет!</h1>
+
+    <h2> Я - Драчева Елена, а это - мой личный сайт</h2>
+    <p> Здесь Вы можете ознакомиться с моими проектами, резюме, а также личным блогом</p>
+
+    {% load static %}
+
+    <img src="{% static 'portfolio/00kh-LUPK7I.jpg' %}" width="300px">
+    <br>
+    <br>
+
+    <hr>
+    <h2> Мои проекты </h2>
+    <hr>
+
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for project in projects %}
+      <div class="col">
+        <div class="card">
+          <img src="{{ project.image.url }}" class="card-img-top" href="{{ project.url }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ project.title }}</h5>
+            <p class="card-text"> {{ project.description }} </p>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+    </div>
+    <br>
+ </div>
+{% endblock %}
+
+

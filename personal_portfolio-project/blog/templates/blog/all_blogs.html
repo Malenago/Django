@@ -1,0 +1,25 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+
+<div class="container text-center">
+    <br>
+    <h1> Блог </h1>
+    <h5>На данный момент размещено постов: {{ blogs.count }} </h5>
+    <br>
+
+    {% for blog in blogs %}
+
+    <div class="container text-center">
+        <div class="text-start">
+            <a href="{% url 'blog:detail' blog.id %}"><h2> {{ blog.title }} </h2></a>
+            <h7 class="text-muted" > {{ blog.date }} </h7>
+            <h5> {{ blog.description|truncatechars:100 }} </h5>
+        </div>
+    </div>
+    <hr>
+    <br>
+
+    {% endfor %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,45 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <h1>Регистрация</h1>
+</div>
+
+<div class="card-body">
+
+
+    {% if form.errors %}
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">×</span>
+      <strong>Предупреждение!</strong>
+        <br>
+        {% for field in form %}
+           {% for error in field.errors %}
+                   <strong>{{ error|escape }}</strong>
+           {% endfor %}
+       {% endfor %}
+    </div>
+    {% endif %}
+
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>{{form.username.label}}</label>
+        {{form.username}}
+
+        <label>{{form.password1.label}}</label>
+        {{form.password1}}
+
+        <label>{{form.password2.label}}</label>
+        {{form.password2}}
+
+        <input style="margin-top:10px ;" class="button" type="submit" value="Зарегистрироваться">
+    </form>
+    <p>У Вас уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+</div>
+
+
+
+
+{% endblock content %}

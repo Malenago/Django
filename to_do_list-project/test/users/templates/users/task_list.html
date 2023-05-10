@@ -1,0 +1,89 @@
+
+{% extends 'users/base.html' %} {% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+{% if user.is_authenticated %}
+<div class="header-bar" style="display: flex; justify-content: flex-start">
+    <div style="margin-left:10px; width: 450px">
+        <h1 >Привет, {{request.user}}</h1>
+    </div>
+    <div style="justify-content: center; display: flex; align-items: center">
+        <a href="{% url 'exit' %}">Выход</a>
+    </div>
+</div>
+
+
+<div id="tasklist" class="task-items-wrapper" style="margin-bottom: 20px;">
+    {% for task in tasks %}
+    <div class="task-wrapper">
+        <div class="task-title">
+            {% if task.complete %}
+            <a href="{% url 'edit' request.user task.id%}"><div class="task-complete-icon"></div></a>
+            <i><s><a style="width=100px;">{{task.title}}</a></s></i>
+            {% else %}
+            <a href="{% url 'edit' request.user task.id%}"><div class="task-incomplete-icon"></div></a>
+            <a style="width=100px;">{{task.title}}</a>
+            {% endif %}
+        </div>
+        <div style="margin-right: 30px" class="task-controls">
+            <a href="{% url 'delete' request.user task.id%}" class="delete-link">&#215;</a>
+        </div>
+    </div>
+
+    {% empty %}
+    <div style="text-align: center; padding-bottom: 10px; line-height: 1em;">
+        <h3>Упс... Тут пусто, дел нет</h3>
+
+    </div>
+    {% endfor %}
+
+    <div class="task-wrapper" style="margin-left: 10px">
+    <p>Хотите добавить задачу?</p>
+    </div>
+
+    <div style="margin: 13px">
+        <form style="display: flex; justify-content: center;" method="POST" action="{% url 'task_list' %}">
+		{% csrf_token %}
+		{{form.title}}
+		<input style="display: flex; justify-content: center" class="button" type="submit" name="+" value="+">
+        </form>
+
+        {% if messages %}
+    <div class="alert" style="margin: 13px">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">×</span>
+      <strong>Предупреждение!</strong>
+        <br>
+        {% for message in messages %}
+        <strong>{{ message }}</strong>
+       {% endfor %}
+    </div>
+    {% endif %}
+    </div>
+
+    <div class="task-wrapper">
+        <p style="margin-left: 10px"> Продуктивного дня! </p>
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="header-bar" style="display: flex; justify-content: flex-start">
+    <div style="margin-left:10px; width: 450px;">
+        <h1 >Добро пожаловать!</h1>
+        <h2> - To Do List</h2>
+    </div>
+</div>
+
+    <div style="text-align: center; padding-bottom: 10px; line-height: 1em; text-decoration: none">
+        <br>
+        <a style="text-decoration: none" href="{% url 'login' %}">Вход</a>
+        <p> или </p>
+        <a style="text-decoration: none" href="{% url 'register' %}">Регистрация</a>
+    </div>
+</div>
+
+{% endif%}
+
+{% endblock content %}
